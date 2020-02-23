@@ -1,5 +1,10 @@
 <?php
 use App\Subject;
+use App\user_data;
+use App\Regulation;
+use Illuminate\Http\Request;
+use App\Branche;
+use App\Feedback;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +17,6 @@ use App\Subject;
 */
 
 Route::get('/', function () {
-	$record = new Subject();
 	$all_records = array();
 	for($i=1;$i<4;$i++){
 		for($j=1;$j<3;$j++)
@@ -28,13 +32,51 @@ Route::get('/', function () {
     return view('welcome',['all_sem_records' => $all_records]);
 });
 
-Route::get('/addsubject/{year}/{sem}/{subjectname}/{credits}',function($y,$s,$sub,$c){
+Route::get('/addsubject/{year}/{sem}/{subjectname}/{credits}/{branch}',function($y,$s,$sub,$c,$b){
 	$ss = new Subject();
 	$ss->regulation_id = 1;
 	$ss->name = $sub;
 	$ss->year = (int)$y;
 	$ss->sem = (int)$s;
-	$ss->credit = (int)$c+1;;
+	$ss->credit = (int)$c+1;
+	$ss->branch_id = (int)$b+1;
 	$ss->save();
 	return Subject::all();
+});
+
+Route::get('/submitDetails',function(Request $request){
+	$branch = Branche::where('branch',$request->input('branch'))->first();
+	$regulation = Regulation::where('regulation',$request->input('regulation'))->first();
+	$check = user_data::where('name',$request->input('name'))->where('regulation_id',$regulation->id)->where('branch_id',$branch->id)->get();
+	$name = $request->input('name');
+	if(count($check)==0){
+		$user = new user_data();
+		$user->name = $request->input('name');
+		$user->regulation_id = $regulation->id;
+		$user->branch_id = $branch->id;
+		$user->save();
+	}
+
+	$all_records = array();
+	for($i=1;$i<=4;$i++){
+		for($j=1;$j<3;$j++)
+			$all_records[$i.'-'.$j] = Subject::where('year',$i)->where('sem',$j)->where('branch_id',$branch->id)->where('regulation_id',$regulation->id)->get();
+	}
+    return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => $request->input('branch')]);
+});
+
+Route::any('submitFeedback',function(Request $request){
+	$feedback = new Feedback();
+	$feedback->name = $request->input('name');
+	$feedback->rating = $request->input('value');
+	$feedback->message = $request->input('message');
+	$feedback->save();
+	return 'submitted';
+});
+
+Route::any('getusersdata',function(Request $request){
+   $data = DB::table('user_datas')->join('branches','user_datas.branch_id','branches.id')->join('regulations','regulations.id','user_datas.regulation_id')->select('name','branch','regulation')->get();
+   foreach ($data as $key => $value) {
+   	echo $key.' '.$value->name.'&emsp;'.$value->regulation.'&emsp;'.$value->branch.'<br>';
+   }
 });

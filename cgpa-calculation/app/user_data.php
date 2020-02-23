@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Regulation extends Model
+class user_data extends Model
 {
     //
 }

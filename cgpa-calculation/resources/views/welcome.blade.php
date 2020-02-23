@@ -9,6 +9,46 @@
     <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
 </head>
 <body>
+    <!-- Button trigger modal 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+-->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Enter Details</h5>
+      </div>
+      <form class="form-group has-error" id="myForm" action="{{url('submitDetails')}}" method="get">
+      <div class="modal-body">        
+            <div class="form-group">
+                <label class="control-label" for="firstname">Name</label>
+                <input type="text" class="form-control required" id="firstname" name="name" required="true" autocomplete="off">
+            </div>
+      <div class="form-group col-md-3 mb-3">
+        <label>Regulation</label>
+          <select class="custom-select" name="regulation">          
+            <option value="R16">R16</option>
+              <option value="R17">R17</option>
+              <option value="R18">R18</option>
+            </select>
+        </div>
+        <div class="form-group col-md-5 mb-3">
+            <label>Stream</label>
+          <select class="custom-select" name="branch"> 
+            <option value="CSE">CSE</option>
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-secondary">    
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
     <div class="container" style="padding-top: 20px;">
         <h2 class="d-flex justify-content-center">Calculate B.Tech Grades</h2>
         <hr>
