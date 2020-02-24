@@ -39,6 +39,9 @@
             <label>Stream</label>
           <select class="custom-select" name="branch"> 
             <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="IT">IT</option>
+            <option value="MECH">MECH</option>
             </select>
         </div>
       </div>

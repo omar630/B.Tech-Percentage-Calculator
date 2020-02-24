@@ -133,7 +133,11 @@ console.log(data[0].label)
             </div>
 
             <div class="footer-left">
-
+              <div class=""><span style="color: white;">Visitor's Count:&emsp;</span>
+                @foreach($visitor_count as $count)
+                  <span class="counter">{{$count}}</span>
+                @endforeach
+              </div>
                 <p class="footer-links">
                     <a href="mailto:omarmd2311@gmail.com?Subject=Suggestion" target="_top">Any Query? Contact Us</a><br>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 15px;">
