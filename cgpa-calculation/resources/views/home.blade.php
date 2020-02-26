@@ -1,23 +1,34 @@
+<?php
+if(!isset($_COOKIE['username'])) {
+    setcookie ("username",$name,time()+60*60*24*30);
+}
+elseif ($_COOKIE['username']!=$name) {
+    setcookie ("username",$name,time()+60*60*24*30);
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Calculate B.Tech Percentage</title>
         <!-- Required meta tags -->
     <meta charset="utf-8">
-     <link rel="apple-touch-icon" sizes="180x180" href="{{url('assets/img/apple-touch-icon.png')}}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{url('assets/img/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{url('assets/img/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{url('assets/img/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{url('assets/img/site.webmanifest')}}">
     <link rel="mask-icon" href="{{url('assets/img/safari-pinned-tab.svg')}}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
 </head>
 <body>
   <script>
+    function clickRef(name){
+    $.ajax({url: "updateTrack?name="+name+"&id="+'{{$user_id}}', success: function(result){
+        console.log(name);
+    }});
+}
     data = [
       { label: "1-1", y: 0 },
       { label: "1-2", y: 0 },
@@ -65,10 +76,13 @@ console.log(data[0].label)
     <ol style="padding-top: 5px;">
             <li>select grades you have secured in <b>grade secured</b> column.</li>
             <li><b>SGPA</b>,<b>CGPA</b>,<b>Percentages</b> will be calculated automatically on any changes in grades.</li>
-            <li>Any changes made in semester grades, percentage will be calculated till that semester.</li>
-            <li><b>NOTE</b>: Enter Details in series wise</li>
+            <li>Any changes made in semester grades, percentage will be calculated till that semester.</li>            
         </ol>
-  </div>
+  </div><br><br>
+  <ol>
+  <li><b>NOTE</b>: Enter Details in series wise else percentage will get calculated wrong</li>
+      <li><em style="color:tomato;">IF ANY DETAILS FOUND INCORRECT PLEASE REPORT(SCREENSHOT WOULD BE HELPFULL) </em><mark><a href="mailto:omarmd2311@gmail.com?Subject=Error Report" target="_blank">HERE &#128512;</a></mark></li>
+      </ol>
         <h6></h6>
           @if(count($all_sem_records['1-1'])==0)
               <h2 class="d-flex justify-content-center">No Data found for selected regulation</h2>
@@ -111,8 +125,8 @@ console.log(data[0].label)
             @endforeach
             <tr>
                 <td id="{{$sem}}cgpa">CGPA= 100</td>                
-                <td id="{{$sem}}overall_percentage">overall %= </td>
-                <td id="{{$sem}}percentage"> % = </td>
+                <td id="{{$sem}}overall_percentage">overall(<b>from 1-1 to {{$sem}}</b>) %= </td>
+                <td id="{{$sem}}percentage"> <b>{{$sem}}</b> % = </td>
                 <td colspan="1" id="{{$sem}}sgpa">SGPA= 10</td>
                 <td id="{{$sem}}total_credits">Total= 24</td>
                 <td id="{{$sem}}total_points">Total= 240</td>
@@ -131,11 +145,11 @@ console.log(data[0].label)
                 <span>Name: Mohammed Omar</span><br>
                 <span>Mobile: <a href="tel:+917396331635">73963331635</a></span><br>                
               </div>
-              <a href="https://wa.me/917396331635" target="_blank"><i class="fa fa-whatsapp"></i>
-                <a href="https://www.facebook.com/omar.7396" target="_blank"><i class="fa fa-facebook"></i></a>
-                <a href="https://twitter.com/Md_omar7" target="_blank"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.linkedin.com/in/omar739/" target="_blank"><i class="fa fa-linkedin"></i></a>
-                <a href="https://github.com/omar630" target="_blank"><i class="fa fa-github"></i></a>
+              <a href="https://wa.me/917396331635" target="_blank" onclick="clickRef('whatsapp');"><i class="fa fa-whatsapp"></i>
+                <a href="https://www.facebook.com/omar.7396" target="_blank" onclick="clickRef('facebook');"><i class="fa fa-facebook"></i></a>
+                <a href="https://twitter.com/Md_omar7" target="_blank" onclick="clickRef('twitter');"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/omar739/" target="_blank" onclick="clickRef('linkedin');"><i class="fa fa-linkedin"></i></a>
+                <a href="https://github.com/omar630" target="_blank" onclick="clickRef('github');"><i class="fa fa-github"></i></a>
                 <!-- Button trigger modal -->
 </div>
             </div>
@@ -144,7 +158,7 @@ console.log(data[0].label)
               <div class=""><span style="color: white;">Visitor's Count:&emsp;</span>
                 @foreach($visitor_count as $count)
                   <span class="counter">{{$count}}</span>
-                @endforeach
+                  @endforeach
               </div>
                 <p class="footer-links">
                     <a href="mailto:omarmd2311@gmail.com?Subject=Suggestion" target="_top">Any Query? Contact Us</a><br>
@@ -207,7 +221,6 @@ console.log(data[0].label)
             }
         });
     });
-
 </script>
 </body>
 </html>

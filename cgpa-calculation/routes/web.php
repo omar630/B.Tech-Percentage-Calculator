@@ -5,6 +5,7 @@ use App\Regulation;
 use Illuminate\Http\Request;
 use App\Branche;
 use App\Feedback;
+use App\Track;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,14 +52,20 @@ Route::get('/submitDetails',function(Request $request){
 	//dd($ip);
 	$name = $request->input('name');
 	$check = user_data::where('ip_address',$ip)->where('regulation_id',$regulation->id)->where('branch_id',$branch->id)->where('name',$name)->get();
-	if(count($check)==0){
-		$user = new user_data();
+	$user = new user_data();
+	$user_id=1;
+	if(count($check)==0){		
 		$user->name = $request->input('name');
 		$user->regulation_id = $regulation->id;
 		$user->branch_id = $branch->id;
 		$user->ip_address = $ip;
-		$user->save();
+		$user_id=$user->save();
+		$user_id = $user->id;
 	}
+	else{
+		$user_id = $check[0]->id;
+	}
+	
 	$visitor_count = count(user_data::all());
 	$visitor_count = str_split ( $visitor_count ,1  );
 	$all_records = array();
@@ -66,7 +73,7 @@ Route::get('/submitDetails',function(Request $request){
 		for($j=1;$j<3;$j++)
 			$all_records[$i.'-'.$j] = Subject::where('year',$i)->where('sem',$j)->where('branch_id',$branch->id)->where('regulation_id',$regulation->id)->get();
 	}
-    return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => $request->input('branch'),'visitor_count' => $visitor_count]);
+    return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => $request->input('branch'),'visitor_count' => $visitor_count,'user_id' => $user_id]);
 });
 
 Route::any('submitFeedback',function(Request $request){
@@ -83,4 +90,26 @@ Route::any('getusersdata',function(Request $request){
    foreach ($data as $key => $value) {
    	echo $key.' '.$value->name.'&emsp;'.$value->regulation.'&emsp;'.$value->branch.'<br>';
    }
+});
+
+Route::get('updateTrack',function(Request $request){
+	$name = $request->input('name');
+	$user_id = $request->input('id');
+	$track = new Track();
+	$track->name = $name;
+	$track->user_datas_id = $user_id;
+	$track->save();
+	return 'true';
+});
+Route::get('getfeedbacks',function(){
+   $data = Feedback::all();
+   foreach ($data as $key => $value) {
+   	echo ($key+1).') <b>Message:</b>'.$value->message.'&emsp; <b>name</b>='.$value->name.'<br>';
+   }
+});
+Route::get('getclicks',function(){
+	$track_record = Track::join('user_datas','user_datas.id','tracks.user_datas_id')->get();
+	foreach ($track_record as $key => $value) {
+		echo ($key+1).')&emsp; icon='.$value->name.'<br>';
+	}
 });

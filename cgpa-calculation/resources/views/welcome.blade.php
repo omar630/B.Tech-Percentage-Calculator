@@ -32,7 +32,7 @@
       <div class="modal-body">        
             <div class="form-group">
                 <label class="control-label" for="firstname">Name</label>
-                <input type="text" class="form-control required" id="firstname" name="name" required="true" autocomplete="off">
+                <input type="text" class="form-control required" id="firstname" name="name" required="true" autocomplete="off"value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>">
             </div>
       <div class="form-group col-md-3 mb-3">
         <label>Regulation</label>

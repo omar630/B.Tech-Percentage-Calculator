@@ -51,7 +51,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         //console.log('sgpa='+sgpa);
         percent = ((sgpa-0.5)*10).toFixed(2);
         console.log(percent);
-        $('#'+common_id+'percentage').text('%= '+((sgpa-0.5)*10).toFixed(decimal));
+        $('#'+common_id+'percentage').html('<b>'+common_id+'%</b>= '+((sgpa-0.5)*10).toFixed(decimal));
         indx = semesters.indexOf(common_id);
         data[indx].y=parseFloat(percent);
         updateChart(data);
@@ -72,7 +72,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         $('#'+sem+'cgpa').text('CGPA= '+cixsi.toFixed(decimal));
         percentage = (cixsi-0.5)*10;
         //console.log(sgpa+'/'+no_of_sem+'='+cixsi);
-        $('#'+sem+'overall_percentage').text('overall %= '+percentage.toFixed(decimal));
+        $('#'+sem+'overall_percentage').html('overall (<b>from 1-1 to '+sem+'</b>) %= '+percentage.toFixed(decimal));
 
     }
     function pdf() {
@@ -81,4 +81,3 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
 $(document).ready(function() {
     $('#staticBackdrop').modal('show');
 });
-
