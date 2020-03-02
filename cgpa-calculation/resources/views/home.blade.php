@@ -6,24 +6,14 @@ elseif ($_COOKIE['username']!=$name) {
     setcookie ("username",$name,time()+60*60*24*30);
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Calculate B.Tech Percentage</title>
-        <!-- Required meta tags -->
-    <meta charset="utf-8">
-<link rel="apple-touch-icon" sizes="180x180" href="{{url('assets/img/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{url('assets/img/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('assets/img/favicon-16x16.png')}}">
-    <link rel="mask-icon" href="{{url('assets/img/safari-pinned-tab.svg')}}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
-</head>
-<body>
-  <script>
+@extends('layouts.app')
+@section('css')
+<link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
+@endsection('css')
+@section('js')
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript" src="{{url('assets/js/all.js')}}"></script>
+  <script type="text/javascript">
     function clickRef(name){
     $.ajax({url: "updateTrack?name="+name+"&id="+'{{$user_id}}', success: function(result){
         console.log(name);
@@ -66,8 +56,10 @@ function updateChart(data) {
 chart.render();
 console.log(data);
 }
-console.log(data[0].label)
+console.log(data[0].label);
 </script>
+@endsection('js')
+@section('content')
     <div class="container" style="padding-top: 20px;">
         <h2 class="d-flex justify-content-center">Calculate JNTUH B.Tech {{$course}} Grades</h2>
         <hr>
@@ -91,7 +83,7 @@ console.log(data[0].label)
         <?php $c=0;?>
             <h2 class="d-flex justify-content-center">{{$sem}}</h2>
             <hr>
-            <table class="table table-bordered table-responsive" style="display: table;">
+            <table class="table table-bordered table-responsive {{$sem}}" style="display: table;">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -203,11 +195,7 @@ console.log(data[0].label)
             </div>
 
         </footer>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{url('assets/js/all.js')}}"></script>
+@section('js')        
 <script type="text/javascript">
       $("#feedback_form").click(function() {
         v = $("input[name='feedback']:checked").val();
@@ -222,5 +210,5 @@ console.log(data[0].label)
         });
     });
 </script>
-</body>
-</html>
+@endsection('js')
+@endsection

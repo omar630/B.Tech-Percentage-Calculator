@@ -20,29 +20,16 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
     function calculateTotal(common_id){
         sum=0;
         common_id = common_id.substring(2,5);
-        console.log('common_id='+common_id)
-        for(i=1;i<=8;i++){
-            console.log(common_id.localeCompare("4-2")==0);
-            if(common_id.localeCompare("4-1")==0 && i==8){
-                sum+=parseInt($('#'+9+'_'+common_id+'points').text());
-                console.log('sum='+sum+' for i=9')
-            }
-            if(common_id.localeCompare("4-2")==0 && i==5){
-                break;
-            }
+        console.log('common_id='+common_id)        
+        for(i=1;i<=$('.'+common_id+' tr').length-2;i++){           
+            console.log('length for '+common_id+'='+$('.'+common_id+' tr').length)
             sum+=parseInt($('#'+i+'_'+common_id+'points').text());
             console.log("sum="+sum+"for i="+i);
             //console.log($('#'+i+'_'+common_id+'points').text());
         }
         $('#'+common_id+'total_points').text('Total= '+sum);
         total_credits = 0;
-        for(i=1;i<=8;i++){
-            if(common_id.localeCompare("4-1")==0 && i==8){
-                total_credits+=parseInt($('#'+9+'_'+common_id+'credit').text());
-            }
-            if(common_id.localeCompare("4-2")==0 && i==5){
-                break;
-            }
+        for(i=1;i<=$('.'+common_id+' tr').length-2;i++){
             total_credits+=parseInt($('#'+i+'_'+common_id+'credit').text());
         }
         sgpa = sum/total_credits;
@@ -54,7 +41,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         $('#'+common_id+'percentage').html('<b>'+common_id+'%</b>= '+((sgpa-0.5)*10).toFixed(decimal));
         indx = semesters.indexOf(common_id);
         data[indx].y=parseFloat(percent);
-        updateChart(data);
+        updateChart(data);       
         calculateCgpa(common_id);
     }
     function calculateCgpa(sem){
@@ -63,7 +50,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         cixsi=0;
         no_of_sem=0;
         sgpa=0;
-        for(i=indx;i>=0;i--){
+        for(i=0;i<8;i++){
             sgpa+= parseFloat($('#'+semesters[i]+'sgpa').text().substring(6));            
             //console.log(parseFloat($('#'+semesters[i]+'sgpa').text().substring(6))+'='+sgpa);
             no_of_sem+=1;
@@ -73,7 +60,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         percentage = (cixsi-0.5)*10;
         //console.log(sgpa+'/'+no_of_sem+'='+cixsi);
         $('#'+sem+'overall_percentage').html('overall (<b>from 1-1 to '+sem+'</b>) %= '+percentage.toFixed(decimal));
-
+        console.log('calculateCgpa');
     }
     function pdf() {
       window.print();
