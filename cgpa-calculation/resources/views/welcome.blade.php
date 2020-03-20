@@ -14,6 +14,11 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
+    <script type="text/javascript">
+        function signin(){
+          
+        }
+    </script>
 </head>
 <body>
     <!-- Button trigger modal 
@@ -53,9 +58,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="submit" class="btn btn-secondary">    
+        <input type="submit" class="btn btn-secondary" value="Try it!">    
+        <input type="button" class="btn btn-primary" value="Sign in?" onclick="signinmodal()">
       </div>
   </form>
+  
     </div>
   </div>
 </div>

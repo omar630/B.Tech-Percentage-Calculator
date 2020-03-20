@@ -113,3 +113,29 @@ Route::get('getclicks',function(){
 		echo ($key+1).')&emsp; icon='.$value->name.'<br>';
 	}
 });
+
+Route::get('addsubject',function(){
+	return view('addsubject');
+});
+Route::post('addsubject',function(Request $request){
+	$sem= $request->input('sem');
+	$year_sem=explode('-',$sem);
+	$year = $year_sem[0];	
+	$sem = $year_sem[1];
+	$branch_name = $request->input('branch');
+	$branch_name_fk = Branche::where('branch',$branch_name)->first();	//$branch_name_fk['id']	
+	$regulation=$request->input('regulation');
+	$regulation_id_fk = Regulation::where('regulation',$regulation)->first();	//$regulation_id_fk['id']
+	$subject_count = $request->input('count');
+	$subjects = array(array());
+	for($i=1;$i<=$subject_count;$i++){
+		if($request->input('subject'.$i)!=null){
+			$subjects[$i-1]=array("name"=>$request->input('subject'.$i),"credit"=>$request->input('credits'.$i),"year"=>$year,"sem"=>$sem,"branch_id"=>$branch_name_fk['id'],"regulation_id"=>$regulation_id_fk['id']);
+		}
+	}
+	Subject::insert($subjects);
+	return view('addsubject');
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

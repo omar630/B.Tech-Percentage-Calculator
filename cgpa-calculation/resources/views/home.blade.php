@@ -1,11 +1,4 @@
-<?php
-if(!isset($_COOKIE['username'])) {
-    setcookie ("username",$name,time()+60*60*24*30);
-}
-elseif ($_COOKIE['username']!=$name) {
-    setcookie ("username",$name,time()+60*60*24*30);
-}
-?>
+
 @extends('layouts.app')
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
