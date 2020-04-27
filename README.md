@@ -3,14 +3,14 @@
 ## Website link
 
 ```http
-$ https://omarsblog.gq/
+https://omarsblog.gq/
 ```
 
 
 
-{% hint style="info" %}
+```http
  Feel free to contribute to this project
-{% endhint %}
+```
 
 
 
