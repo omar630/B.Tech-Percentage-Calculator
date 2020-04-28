@@ -46,11 +46,13 @@ $(document).ready(function(){
 	  <option value="R19">R19</option>
 	</select>
 </div>
+<div class="col-md-3 mb-3">
 	<div id="subject1">
-	<input type="text" id="name1" name="subject1" class="form-group col-md-2" placeholder="subject 1"><input type="text" name="credits1" placeholder="credits">
+	<input type="text" id="name1" name="subject1" class="form-control form-control" placeholder="subject 1"><input type="text" name="credits1" placeholder="credits">
 	</div>
 	<input type="submit" name="submit">
 	<input type="text" name="count" id="count" hidden="" value=1>
+</div>
 </form>
 	<p id="addsubject">Add Subject</p>
 @endsection

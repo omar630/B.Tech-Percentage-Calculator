@@ -41,7 +41,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         console.log('length for '+common_id+'='+$('.'+common_id+' tr').length)
         for(i=1;i<=$('.'+common_id+' tr').length-2;i++){           
             console.log($('#'+i+'_'+common_id+'points').text());
-            sum_of_credit_secured+=parseInt($('#'+i+'_'+common_id+'points').text());
+            sum_of_credit_secured+=parseFloat($('#'+i+'_'+common_id+'points').text());
             //console.log("sum_of_credit_secured="+sum_of_credit_secured+"for i="+i);
             //console.log($('#'+i+'_'+common_id+'points').text());
         }
@@ -49,7 +49,7 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         total_credits = 0;
         
         for(i=1;i<=$('.'+common_id+' tr').length-2;i++){
-            total_credits+=parseInt($('#'+i+'_'+common_id+'credit').text());
+            total_credits+=parseFloat($('#'+i+'_'+common_id+'credit').text());
         }
 
         sgpa = sum_of_credit_secured/total_credits;
@@ -73,8 +73,8 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         for(i=0;i<8;i++){
             console.log("======"+semesters[i]+"=======")
             sgpa= parseFloat($('#'+semesters[i]+'sgpa').text().substring(6));
-            total_credits+=parseInt($('#'+semesters[i]+'total_credits').text().substring(6));
-            total_secured_points+=parseInt($('#'+semesters[i]+'total_points').text().substring(6));
+            total_credits+=parseFloat($('#'+semesters[i]+'total_credits').text().substring(6));
+            total_secured_points+=parseFloat($('#'+semesters[i]+'total_points').text().substring(6));
             cgpa = (total_secured_points/total_credits).toFixed(decimal)
             console.log("sgpa="+sgpa)
             console.log("total_credits="+total_credits)
