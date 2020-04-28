@@ -109,9 +109,9 @@ console.log(data[0].label);
                 </tr>              
             @endforeach
             <tr>
-                <td id="{{$sem}}cgpa">CGPA= 100</td>                
-                <td id="{{$sem}}overall_percentage">overall(<b>from 1-1 to {{$sem}}</b>) %= </td>
-                <td id="{{$sem}}percentage"> <b>{{$sem}}</b> % = </td>
+                <td id="{{$sem}}cgpa">CGPA= 10</td>                
+                <td id="{{$sem}}overall_percentage">overall(<b>from 1-1 to {{$sem}}</b>) %= 95</td>
+                <td id="{{$sem}}percentage"> <b>{{$sem}}</b> % = 95</td>
                 <td colspan="1" id="{{$sem}}sgpa">SGPA= 10</td>
                 <td id="{{$sem}}total_credits">Total= 24</td>
                 <td id="{{$sem}}total_points">Total= 240</td>
