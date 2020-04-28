@@ -1,14 +1,14 @@
-
+#marks input{
+      width: 20px !important;
+    background-color: white!important;
+    border: none !important;
+    color: unset !important;
+}
 .counter{display: inline-block;
   padding: 6px 6px 4px;
   border-radius: 3px;
   background: #b09dc4;
   margin-right: -2px;
-}
-.modal-dialog {
-    height: 50%;
-    width: 50%;
-    margin: auto
 }
 
 .modal-header {
@@ -31,10 +31,6 @@ textarea {
 
 .icon1 {
     color: #007bff
-}
-
-a {
-    margin: auto
 }
 
 input {

@@ -139,3 +139,5 @@ Route::post('addsubject',function(Request $request){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('savemarks','MarksDataController@store')->name('savemarks');

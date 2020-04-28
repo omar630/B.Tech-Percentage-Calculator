@@ -58,8 +58,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input type="submit" class="btn btn-secondary" value="Try it!">    
-        <input type="button" class="btn btn-primary" value="Sign in?" onclick="signinmodal()">
+        <input type="submit" class="btn btn-light" value="Try it!">    
+        <a href="{{route('login')}}" ><input type="button" class="btn btn-primary" value="Sign in?" onclick="signinmodal()">
       </div>
   </form>
   

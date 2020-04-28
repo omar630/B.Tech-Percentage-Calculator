@@ -1,7 +1,10 @@
 //below code is for calculation
 var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
-    decimal=3;
-    function changeGradePoint(element){
+    decimal=2;
+    function changeGradePoint(element, subject_id = ''){
+        /*
+            this function calculates grade
+        */
         console.log("****changeGradePoint()****");
         var grade = $('#'+element).find(":selected").val();
         var common_id = element.substring(0,5);
@@ -9,6 +12,9 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         var points = $('#'+common_id+'credit').text();
         //console.log(points);
         $('#'+common_id+'points').text(grade*points);
+        if(subject_id.length!=''){
+            $('#gradepoint_'+subject_id).attr('value',grade);
+        }
         console.log("****changeGradePoint() end****");
         calculateTotal(common_id);
     }
@@ -22,9 +28,15 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
     }
 
     function calculateTotal(common_id){
-        console.log("****calculateTotal()****");
+        /*
+            this function calculates 
+            1)present sem percentage
+            2)sgpa
+        */
+        console.log("****calculateTotal() for "+common_id+"****");
         sum_of_credit_secured=0;
-        common_id = common_id.substring(2,5);
+        if(!semesters.includes(common_id) )
+            common_id = common_id.substring(2,5);
         console.log('common_id='+common_id)        
         console.log('length for '+common_id+'='+$('.'+common_id+' tr').length)
         for(i=1;i<=$('.'+common_id+' tr').length-2;i++){           
@@ -35,10 +47,13 @@ var semesters = ['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2'];
         }
         $('#'+common_id+'total_points').text('Total= '+sum_of_credit_secured);
         total_credits = 0;
+        
         for(i=1;i<=$('.'+common_id+' tr').length-2;i++){
             total_credits+=parseInt($('#'+i+'_'+common_id+'credit').text());
         }
+
         sgpa = sum_of_credit_secured/total_credits;
+        $('#'+common_id+"total_credits").text("Total="+total_credits);
         console.log('total_credits='+total_credits);
         $('#'+common_id+'sgpa').text('SGPA= '+sgpa.toFixed(decimal));
         console.log('sgpa='+sgpa);

@@ -37,13 +37,18 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>     
+                        <div class="form-group row">                        
+                            <label for="name" class="col-md-4 col-form-label text-md-right"></label>
+                            <div class="col-md-6">
+                            <small id="branchhelp" class="form-text text-muted">Enter below details correctly, your data(marks) will be saved according to this.</small>                   
                         </div>
-
+                    </div>
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Branch') }}</label>
 
-                            <div class="col-md-6">
-                                <select name="branch" autofocus="">
+                            <div class="col-md-6 ">
+                                <select name="branch" class="browser-default custom-select mb-4" autofocus="">
                                     <option value="1" selected="">CSE</option>
                                     <option value="2">ECE</option>
                                     <option value="4">IT</option>
@@ -61,8 +66,8 @@
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Regulation') }}</label>
 
-                            <div class="col-md-6">
-                                <select name="regulation" autofocus="">
+                            <div class="col-md-6 ">
+                                <select name="regulation" class="browser-default custom-select mb-4" autofocus="">
                                     <option value="1" selected="">R16</option>
                                     <option value="2">R18</option>
                                     <option value="4">R19</option>
