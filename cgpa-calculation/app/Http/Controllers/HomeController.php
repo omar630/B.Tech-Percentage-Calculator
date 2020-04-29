@@ -42,7 +42,10 @@ class HomeController extends Controller
         if(MarksData::where('user_id', $user->id)->count()>0){
             for($i=1;$i<=4;$i++){
                 for($j=1;$j<3;$j++)
-                    $all_records[$i.'-'.$j] = Subject::where('year',$i)->where('sem',$j)->where('branch_id',$branch->id)->where('regulation_id',$regulation->id)->join('marks_data','marks_data.subject_id','=','subjects.id')->where('marks_data.user_id','=',$user->id)->select('subjects.id','name','credit','gradepoint')->get();
+                    $all_records[$i.'-'.$j] = Subject::where('year',$i)->where('sem',$j)->where('branch_id',$branch->id)->where('regulation_id',$regulation->id)->leftjoin('marks_data',function($join) use($user){
+                        $join->on('marks_data.subject_id','=','subjects.id')->where('user_id','=',$user->id);
+                    })->select('subjects.id','name','credit','gradepoint')->get();
+                        //DB::raw("SELECT * FROM subjects left join(select * from marks_data where user_id=1)as b on b.subject_id=subjects.id")
 
             }
         }

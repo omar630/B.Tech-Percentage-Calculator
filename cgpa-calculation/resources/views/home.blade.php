@@ -115,9 +115,9 @@ console.log(data[0].label);
                     <th scope="row">{{++$c}}</th>
                     <td id='{{$c}}_{{$sem}}subject'>{{$subject->name}}</td>
                     <td>    
-                    @guest
-                      @php $subject->gradepoint=0; @endphp
-                      @endguest      
+                      @empty($subject->gradepoint)
+                        @php $subject->gradepoint=10; @endphp
+                      @endempty
                       <select id="{{$c}}_{{$sem}}gs" onchange="changeGradePoint(this.id, {{$subject->id}} );">
                         <option value="10"<?php if ($subject->gradepoint==10){echo "selected=''";} ?> >O</option>
                         <option value="9"<?php if ($subject->gradepoint==9){echo "selected=''";} ?> >A<sup>+</sup></option>
@@ -170,15 +170,26 @@ console.log(data[0].label);
         $('#savemarks').click(function(){
           $('#savemarks').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>saving data').addClass('disabled');
           $.ajax({
-    type: "POST",
-    url: "savemarks",
-    dataType:'json',
-    data: $('#savemarksform').serialize(),
-    success: function(data) {
-      $('.success').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Saved!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-      $('#savemarks').html('Save marks').removeClass('disabled');
-    }    
-  });
+            type: "POST",
+            url: "savemarks",
+            dataType:'json',
+            data: $('#savemarksform').serialize(),
+            success: function(data) {
+              console.log(data);
+              if(data){
+                $('.success').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Saved!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('#savemarks').html('Save marks').removeClass('disabled');
+              }
+              else{
+                $('.success').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Something went wrong.please try again!.     <a class="nav-link" href="mailto:omarmd2311@gmail.com?subject=Report">Report</a></strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+              $('#savemarks').html('try again').removeClass('disabled');  
+              }
+            },
+            error: function(){
+              $('.success').html('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Something went wrong.please try again!.     <a class="nav-link" href="mailto:omarmd2311@gmail.com?subject=Report">Report</a></strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+              $('#savemarks').html('try again').removeClass('disabled');
+            }
+          });
         });
     </script>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
