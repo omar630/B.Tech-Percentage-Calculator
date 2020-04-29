@@ -117,7 +117,7 @@ Route::get('getclicks',function(){
 Route::get('addsubject',function(){
 	return view('addsubject');
 });
-Route::post('addsubject',function(Request $request){
+Route::get('addsubjects',function(Request $request){
 	$sem= $request->input('sem');
 	$year_sem=explode('-',$sem);
 	$year = $year_sem[0];	
@@ -133,8 +133,10 @@ Route::post('addsubject',function(Request $request){
 			$subjects[$i-1]=array("name"=>$request->input('subject'.$i),"credit"=>$request->input('credits'.$i),"year"=>$year,"sem"=>$sem,"branch_id"=>$branch_name_fk['id'],"regulation_id"=>$regulation_id_fk['id']);
 		}
 	}
-	Subject::insert($subjects);
-	return view('addsubject');
+	if(Subject::insert($subjects))
+		return view('addsubject');
+	else
+		return 'some error occurred';
 });
 Auth::routes();
 

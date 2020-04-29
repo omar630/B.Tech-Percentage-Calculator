@@ -5,7 +5,7 @@
 $(document).ready(function(){
 	var c=2;
   $("#addsubject").click(function(){
-    $("#subject"+(c-1)).after("<div id='subject"+c+"'><input type='text' id='name"+c+"' name='subject"+c+"' class='form-group col-md-2' placeholder='subject "+c+"'><input type='text' name='credits"+c+"' placeholder='credits'></div>");
+    $("#subject"+(c-1)).after("<div id='subject"+c+"'><input type='text' id='name"+c+"' name='subject"+c+"'  class='form-control' placeholder='subject "+c+"'><input type='text' name='credits"+c+"' placeholder='credits'></div>");
     $('#count').val(c);
     console.log($('#count'));
     c=c+1;
@@ -13,8 +13,7 @@ $(document).ready(function(){
 });
 </script>
 @endsection('js')
-<form method="post" action="{{url('/addsubject')}}">	
-	@csrf
+<form method="get" action="{{url('/addsubjects')}}">	
 	 <div class="col-md-3 mb-3">
       <label for="validationTooltip04">Semester</label>
       <select class="custom-select" id="validationTooltip04" required name="sem">
@@ -48,7 +47,7 @@ $(document).ready(function(){
 </div>
 <div class="col-md-3 mb-3">
 	<div id="subject1">
-	<input type="text" id="name1" name="subject1" class="form-control form-control" placeholder="subject 1"><input type="text" name="credits1" placeholder="credits">
+	<input type="text" id="name1" name="subject1" class="form-control" placeholder="subject 1"><input type="text" name="credits1" placeholder="credits">
 	</div>
 	<input type="submit" name="submit">
 	<input type="text" name="count" id="count" hidden="" value=1>
