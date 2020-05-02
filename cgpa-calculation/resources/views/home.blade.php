@@ -114,10 +114,16 @@ console.log(data[0].label);
                   <tr>
                     <th scope="row">{{++$c}}</th>
                     <td id='{{$c}}_{{$sem}}subject'>{{$subject->name}}</td>
-                    <td>    
-                      @empty($subject->gradepoint)
+                    <td> 
+                      @guest
                         @php $subject->gradepoint=10; @endphp
-                      @endempty
+                      @endguest
+                      @auth
+                        @if($subject->gradepoint===null)
+                          @php $subject->gradepoint=10; @endphp
+                        @endif
+
+                      @endauth
                       <select id="{{$c}}_{{$sem}}gs" onchange="changeGradePoint(this.id, {{$subject->id}} );">
                         <option value="10"<?php if ($subject->gradepoint==10){echo "selected=''";} ?> >O</option>
                         <option value="9"<?php if ($subject->gradepoint==9){echo "selected=''";} ?> >A<sup>+</sup></option>

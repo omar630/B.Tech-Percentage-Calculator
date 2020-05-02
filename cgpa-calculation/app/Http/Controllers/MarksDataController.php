@@ -42,7 +42,6 @@ class MarksDataController extends Controller
        foreach ($request as $key => $value) {
            $data[]=array('user_id'=>$user->id,'subject_id'=>$key,'gradepoint'=>$value);
        }
-       return 'true';
        if(MarksData::where('user_id','=',$user->id)->count()==0){
             if(MarksData::insert($data))
                 return 'true';
@@ -50,7 +49,7 @@ class MarksDataController extends Controller
         else{
             foreach ($request as $key => $value) {
                 $marks = MarksData::where('user_id','=',$user->id)->where('subject_id','=',$key)->update(['gradepoint'=>$value]);
-            }       
+            }    
             return 'true';
         }
        return 'false';
