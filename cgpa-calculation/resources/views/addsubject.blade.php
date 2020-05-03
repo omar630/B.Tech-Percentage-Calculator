@@ -30,19 +30,17 @@ $(document).ready(function(){
   <div class="col-md-3 mb-3">
       <label for="validationTooltip04">Branch</label>
       <select class="custom-select" id="validationTooltip04" required name="branch">
-        <option selected="" value="CSE">CSE</option>
-		<option value="MECH">MECH</option>
-		<option value="IT">IT</option>
-		<option value="ECE">ECE</option>
+        @foreach($branches as $branch)
+        	<option value="{{$branch->id}}" @if($branch->id==1) selected="true" @endif>{{$branch->branch}}</option>
+        @endforeach
       </select>
   </div>
   <div class="col-md-3 mb-3">
 	<label for="validationTooltip04">Regulation</label>
 	<select class="custom-select" id="validationTooltip04" required name="regulation">
-	  <option selected="" value="R16">R16</option>
-	  <option value="R17">R17</option>
-	  <option value="R18">R18</option>
-	  <option value="R19">R19</option>
+	  @foreach($regulations as $regulation)
+        <option value="{{$regulation->id}}" @if($regulation->id==1) selected="true" @endif>{{$regulation->regulation}}</option>
+      @endforeach
 	</select>
 </div>
 <div class="col-md-3 mb-3">

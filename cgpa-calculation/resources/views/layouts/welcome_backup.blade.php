@@ -1,15 +1,29 @@
-@extends('layouts.app')
-    @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{url('assets/js/all.js')}}"></script>
-      <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
-    @endsection
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculate B.Tech Percentage</title>
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+<link rel="apple-touch-icon" sizes="180x180" href="{{url('assets/img/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url('assets/img/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('assets/img/favicon-16x16.png')}}">
+    <link rel="mask-icon" href="{{url('assets/img/safari-pinned-tab.svg')}}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('assets/css/all.css')}}">
+    <script data-ad-client="ca-pub-2758895778992235" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
-@section('content')
+<body>
+    <!-- Button trigger modal 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+-->
+<!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" style="width: initial;padding: 10px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">Enter Details</h5>
@@ -18,31 +32,30 @@
       <div class="modal-body">        
             <div class="form-group">
                 <label class="control-label" for="firstname">Name</label>
-                <input type="text" class="form-control required" id="firstname" name="name" required="true" autocomplete="off"value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>">
+                <input type="text" class="form-control required" id="firstname" name="name" required="true" autocomplete="off" value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>">
             </div>
       <div class="form-group col-md-3 mb-3">
         <label>Regulation</label>
           <select class="custom-select" name="regulation">          
-            @foreach($regulations as $regulation)
-              <option value="{{$regulation->id}}" @if($regulation->id==1) selected="true" @endif>{{$regulation->regulation}}</option>
-            @endforeach
+            <option value="R16">R16</option>
+              <option value="R17">R17</option>
+              <option value="R18">R18</option>
             </select>
         </div>
         <div class="form-group col-md-5 mb-3">
             <label>Stream</label>
           <select class="custom-select" name="branch"> 
-            @foreach($branches as $branch)
-              <option value="{{$branch->id}}" @if($branch->id==1) selected="true" @endif>{{$branch->branch}}</option>
-            @endforeach
+            <option value="CSE">CSE</option>
+	    <option value="ECE">ECE</option>
+            <option value="IT">IT</option>
+            <option value="MECH">MECH</option>
             </select>
         </div>
       </div>
       <div class="modal-footer">
-        <input type="submit" class="btn btn-link btn-sm" value="Try it!">    
-        <a href="{{route('login')}}" ><input type="button" class="btn btn-primary btn-sm" value="Sign in?" onclick="signinmodal()">
+        <input type="submit" class="btn btn-secondary">    
       </div>
   </form>
-  
     </div>
   </div>
 </div>
@@ -130,4 +143,13 @@
             </div>
 
         </footer>
-@endsection
+
+
+Resources
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{url('assets/js/all.js')}}"></script>
+</body>
+</html>

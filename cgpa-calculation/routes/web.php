@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Branche;
 use App\Feedback;
 use App\Track;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +31,9 @@ Route::get('/', function () {
 		}
 	}*/
 	//return $all_records;
-    return view('welcome',['all_sem_records' => $all_records]);
+	$regulations = Regulation::all();
+	$branches = Branche::all();
+    return view('welcome',['all_sem_records' => $all_records, 'regulations' => $regulations,'branches' => $branches]);
 });
 
 Route::get('/addsubject/{year}/{sem}/{subjectname}/{credits}/{branch}',function($y,$s,$sub,$c,$b){
@@ -46,18 +49,18 @@ Route::get('/addsubject/{year}/{sem}/{subjectname}/{credits}/{branch}',function(
 });
 
 Route::get('/submitDetails',function(Request $request){
-	$branch = Branche::where('branch',$request->input('branch'))->first();
-	$regulation = Regulation::where('regulation',$request->input('regulation'))->first();
+	$branch = $request->input('branch');
+	$regulation = $request->input('regulation');
 	$ip = $request->ip();
 	//dd($ip);
 	$name = $request->input('name');
-	$check = user_data::where('ip_address',$ip)->where('regulation_id',$regulation->id)->where('branch_id',$branch->id)->where('name',$name)->get();
+	$check = user_data::where('ip_address',$ip)->where('regulation_id',$regulation)->where('branch_id',$branch)->where('name',$name)->get();
 	$user = new user_data();
 	$user_id=1;
 	if(count($check)==0){		
 		$user->name = $request->input('name');
-		$user->regulation_id = $regulation->id;
-		$user->branch_id = $branch->id;
+		$user->regulation_id = $regulation;
+		$user->branch_id = $branch;
 		$user->ip_address = $ip;
 		$user_id=$user->save();
 		$user_id = $user->id;
@@ -71,22 +74,22 @@ Route::get('/submitDetails',function(Request $request){
 	$all_records = array();
 	for($i=1;$i<=4;$i++){
 		for($j=1;$j<3;$j++)
-			$all_records[$i.'-'.$j] = Subject::where('year',$i)->where('sem',$j)->where('branch_id',$branch->id)->where('regulation_id',$regulation->id)->get();
+			$all_records[$i.'-'.$j] = Subject::where('year',$i)->where('sem',$j)->where('branch_id',$branch)->where('regulation_id',$regulation)->get();
 	}
-    return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => $request->input('branch'),'visitor_count' => $visitor_count,'user_id' => $user_id]);
+    return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => Branche::find($request->input('branch')),'regulation' => Regulation::find($request->input('regulation')),'visitor_count' => $visitor_count,'user_id' => $user_id]);
 });
 
 Route::any('submitFeedback',function(Request $request){
 	$feedback = new Feedback();
 	$feedback->name = $request->input('name');
-	$feedback->rating = $request->input('value');
+	$feedback->rating = $request->input('rating');
 	$feedback->message = $request->input('message');
 	$feedback->save();
 	return 'submitted';
 });
 
 Route::any('getusersdata',function(Request $request){
-   $data = DB::table('user_datas')->join('branches','user_datas.branch_id','branches.id')->join('regulations','regulations.id','user_datas.regulation_id')->select('name','branch','regulation')->oldest('user_datas.created_at')->get();
+   $data = DB::table('user_datas')->join('branches','user_datas.branch_id','branches.id')->join('regulations','regulations.id','user_datas.regulation_id')->select('name','branch','regulation')->latest('user_datas.created_at')->get();
    foreach ($data as $key => $value) {
    	echo $key.' '.$value->name.'&emsp;'.$value->regulation.'&emsp;'.$value->branch.'<br>';
    }
@@ -115,26 +118,29 @@ Route::get('getclicks',function(){
 });
 
 Route::get('addsubject',function(){
-	return view('addsubject');
+	$regulations = Regulation::all();
+	$branches = Branche::all();
+	return view('addsubject',['regulations' => $regulations,'branches' => $branches]);
 });
 Route::get('addsubjects',function(Request $request){
 	$sem= $request->input('sem');
 	$year_sem=explode('-',$sem);
 	$year = $year_sem[0];	
 	$sem = $year_sem[1];
-	$branch_name = $request->input('branch');
-	$branch_name_fk = Branche::where('branch',$branch_name)->first();	//$branch_name_fk['id']	
-	$regulation=$request->input('regulation');
-	$regulation_id_fk = Regulation::where('regulation',$regulation)->first();	//$regulation_id_fk['id']
+	$branch_name_fk = $request->input('branch');
+	$regulation_id_fk = $request->input('regulation');
 	$subject_count = $request->input('count');
 	$subjects = array(array());
 	for($i=1;$i<=$subject_count;$i++){
 		if($request->input('subject'.$i)!=null){
-			$subjects[$i-1]=array("name"=>$request->input('subject'.$i),"credit"=>$request->input('credits'.$i),"year"=>$year,"sem"=>$sem,"branch_id"=>$branch_name_fk['id'],"regulation_id"=>$regulation_id_fk['id']);
+			$subjects[$i-1]=array("name"=>$request->input('subject'.$i),"credit"=>$request->input('credits'.$i),"year"=>$year,"sem"=>$sem,"branch_id"=>$branch_name_fk,"regulation_id"=>$regulation_id_fk);
 		}
 	}
-	if(Subject::insert($subjects))
-		return view('addsubject');
+	if(Subject::insert($subjects)){
+		$regulations = Regulation::all();
+		$branches = Branche::all();
+		return view('addsubject',['regulations' => $regulations,'branches' => $branches]);
+	}
 	else
 		return 'some error occurred';
 });
@@ -143,3 +149,19 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('savemarks','MarksDataController@store')->name('savemarks');
+
+Route::any('getregisteredusers',function(){
+	$user = User::all();
+	echo "<ol>";
+	foreach ($user as $key ) {
+		echo "<li>".$key->email."&nbsp;=>".$key->name."</li>";
+	}
+});
+
+Route::get('addregulation',function(){
+	return view('regulation.add');
+});
+Route::post('addregulation','RegulationController@store')->name('addregulation');
+Route::any('edit',function(){
+	return view('Admin.subjects.index');
+});

@@ -49,10 +49,9 @@
 
                             <div class="col-md-6 ">
                                 <select name="branch" class="browser-default custom-select mb-4" autofocus="">
-                                    <option value="1" selected="">CSE</option>
-                                    <option value="2">ECE</option>
-                                    <option value="4">IT</option>
-                                    <option value="5">MECH</option>
+                                    @foreach($branches as $branch)
+                                    <option value="{{$branch->id}}" @if($branch->id==1) selected="true" @endif>{{$branch->branch}}</option>
+                                    @endforeach
                                 </select>
 
                                 @error('branch')
@@ -68,9 +67,9 @@
 
                             <div class="col-md-6 ">
                                 <select name="regulation" class="browser-default custom-select mb-4" autofocus="">
-                                    <option value="1" selected="">R16</option>
-                                    <option value="2">R18</option>
-                                    <option value="4">R19</option>
+                                    @foreach($regulations as $regulation)
+                                    <option value="{{$regulation->id}}" @if($regulation->id==1) selected="true" @endif>{{$regulation->regulation}}</option>
+                                    @endforeach
                                 </select>
 
                                 @error('regulation')

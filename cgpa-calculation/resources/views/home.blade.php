@@ -56,11 +56,12 @@ console.log(data[0].label);
                 $("#feedback_form").click(function() {
         v = $("input[name='feedback']:checked").val();
       m = $('#message').val();
+      rating = $("input[name='rating']").val();
         $.ajax({
             type: "GET",
             dataType:'json',
-            data: {value:v,name:'{{$name}}',message: m},
-            url : "/submitFeedback",
+            data: {value:v,name:'{{$name}}',message: m,rating: rating},
+            url : "{{url('submitFeedback')}}",
             success : function (data) {
             }
         });
@@ -73,7 +74,7 @@ console.log(data[0].label);
 @endsection('js')
 @section('content')
     <div class="container" style="padding-top: 20px;">
-        <h2 class="d-flex justify-content-center">Calculate JNTUH B.Tech {{$course}} Grades</h2>
+        <h2 class="d-flex justify-content-center">JNTUH B.Tech {{$regulation->regulation}}-{{$course->branch}} Grades</h2>
         <hr>
         <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">How to Calculate?</button>
   <div id="demo" class="collapse">
@@ -84,7 +85,8 @@ console.log(data[0].label);
         </ol>
   </div><br><br>
   <ol>
-  <li><b>NOTE</b>: Enter Details in series wise else percentage will get calculated wrong</li>
+  <!---<li><b>NOTE</b>: Enter Details in series wise else percentage will get calculated wrong</li>-->
+        @guest <li style="color:green;"><b>Update!!!</b>  Now you can <a href="{{url('login')}}" style="border-bottom: 1px solid green;">Login in</a> to save marks.</li>@endguest
       <li><em style="color:tomato;">IF ANY DETAILS FOUND INCORRECT PLEASE REPORT(SCREENSHOT WOULD BE HELPFULL) </em><mark><a href="mailto:omarmd2311@gmail.com?Subject=Error Report" target="_blank">HERE &#128512;</a></mark></li>
       </ol>
         <h6></h6>
@@ -248,25 +250,25 @@ console.log(data[0].label);
                 <h6>Your Rating</h6>
             </div> <!-- Radio Buttons for Rating-->  
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="verygood" name="defaultExampleRadios" value="5" checked>
+              <input type="radio" class="custom-control-input" id="verygood" name="rating" value="5" checked>
               <label class="custom-control-label" for="verygood">Very good</label>
             </div> 
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="good" name="defaultExampleRadios" value="4" checked>
+              <input type="radio" class="custom-control-input" id="good" name="rating" value="4" checked>
               <label class="custom-control-label" for="good">Good</label>
             </div> 
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="med" name="defaultExampleRadios" value="3" checked>
+              <input type="radio" class="custom-control-input" id="med" name="rating" value="3" checked>
               <label class="custom-control-label" for="med">Mediocre</label>
             </div> 
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="bad" name="defaultExampleRadios" value="2" checked>
+              <input type="radio" class="custom-control-input" id="bad" name="rating" value="2" checked>
               <label class="custom-control-label" for="bad">Bad</label>
             </div>          
             <!--Text Message-->
             <div class="text-center">
                 <h4>What could we improve?</h4>
-            </div> <textarea class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+            </div> <textarea class="form-control" id="exampleFormControlTextarea4" name="message" rows="3"></textarea>
       <div class="modal-footer">
         <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button  class="btn btn-primary" data-dismiss="modal" id="feedback_form">Send <i class="fa fa-paper-plane"></i></button>

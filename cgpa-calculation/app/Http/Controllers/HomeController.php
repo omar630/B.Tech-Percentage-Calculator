@@ -34,7 +34,7 @@ class HomeController extends Controller
         $regulation = Regulation::where('id',$user->regulation_id)->first();
         $name = $user->name;
         $user_id = $user->id;
-        
+
         $visitor_count = count(user_data::all());
         $visitor_count = str_split ( $visitor_count ,1  );
         $all_records = array();
@@ -57,6 +57,6 @@ class HomeController extends Controller
             }
         }
         //dd($all_records['3-1']);
-            return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => $branch->name,'visitor_count' => $visitor_count,'user_id' => $user_id]);
+            return view('home',['all_sem_records' => $all_records,'name' => $name, 'course' => $branch->name,'visitor_count' => $visitor_count,'user_id' => $user_id, 'course' => Branche::find($user->branch_id),'regulation' => Regulation::find($user->regulation_id)]);
     }
 }
