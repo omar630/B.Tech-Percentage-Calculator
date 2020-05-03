@@ -12,4 +12,8 @@ class Subject extends Model
      * @var array
      */
     protected $fillable = ['regulation_id','year','sem','name','credit','branch_id'];
+
+    public function getbranch(){
+    	return $this->belongsTo('App\Branche','branch_id','id');
+    }
 }

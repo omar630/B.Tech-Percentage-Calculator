@@ -165,3 +165,21 @@ Route::post('addregulation','RegulationController@store')->name('addregulation')
 Route::any('edit',function(){
 	return view('Admin.subjects.index');
 });
+
+
+
+
+
+//one-one return subjects of particuar branch
+Route::any('getsubjects',function(){
+	ddd (Branche::find(2)->subjects);
+});
+//belongs to inverse one-one return branch of specific subject
+Route::any('getbranch/{id}',function($id){
+	dd(Subject::findOrFail($id)->getbranch->branch);
+});
+
+//one-many user has many subjects marks
+Route::any('getusermarks/{id}',function($id){
+	dd(User::find($id)->getmarks);
+});
