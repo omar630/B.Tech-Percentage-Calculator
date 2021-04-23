@@ -1,10 +1,9 @@
 //home
 <?php
-if(!isset($_COOKIE['username'])) {
-    setcookie ("username",$name,time()+60*60*24*30);
-}
-elseif ($_COOKIE['username']!=$name) {
-    setcookie ("username",$name,time()+60*60*24*30);
+if (!isset($_COOKIE['username'])) {
+    setcookie('username', $name, time() + 60 * 60 * 24 * 30);
+} elseif ($_COOKIE['username'] != $name) {
+    setcookie('username', $name, time() + 60 * 60 * 24 * 30);
 }
 ?>
 <!DOCTYPE html>
@@ -90,7 +89,7 @@ console.log(data[0].label)
               <h2 class="d-flex justify-content-center">No Data found for selected regulation</h2>
           @endif
         @foreach($all_sem_records as $sem => $value)
-        <?php $c=0;?>
+        <?php $c = 0; ?>
             <h2 class="d-flex justify-content-center">{{$sem}}</h2>
             <hr>
             <table class="table table-bordered table-responsive" style="display: table;">

@@ -17,10 +17,10 @@ class CreateSubjectsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('regulation_id')->unsigned();
             $table->foreign('regulation_id')->references('id')->on('regulations');
-            $table->enum('year', [1,2,3,4]);
-            $table->enum('sem', [1,2]);
+            $table->enum('year', [1, 2, 3, 4]);
+            $table->enum('sem', [1, 2]);
             $table->string('name');
-            $table->enum('credit',[0,1,2,3,4]);
+            $table->enum('credit', [0, 1, 2, 3, 4]);
             $table->bigInteger('branch_id')->unsigned();
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->timestamps();

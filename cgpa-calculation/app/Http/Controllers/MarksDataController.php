@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
 use App\MarksData;
+use Auth;
+use Illuminate\Http\Request;
+
 class MarksDataController extends Controller
 {
     /**
@@ -30,35 +31,39 @@ class MarksDataController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request = $request->all();
         $user = Auth::user();
-       unset($request['_token']);
-       $data=[];
-       foreach ($request as $key => $value) {
-           $data[]=array('user_id'=>$user->id,'subject_id'=>$key,'gradepoint'=>$value);
-       }
-       if(MarksData::where('user_id','=',$user->id)->count()==0){
-            if(MarksData::insert($data))
+        unset($request['_token']);
+        $data = [];
+        foreach ($request as $key => $value) {
+            $data[] = ['user_id'=>$user->id, 'subject_id'=>$key, 'gradepoint'=>$value];
+        }
+        if (MarksData::where('user_id', '=', $user->id)->count() == 0) {
+            if (MarksData::insert($data)) {
                 return 'true';
-       }
-        else{
+            }
+        } else {
             foreach ($request as $key => $value) {
-                $marks = MarksData::where('user_id','=',$user->id)->where('subject_id','=',$key)->update(['gradepoint'=>$value]);
-            }    
+                $marks = MarksData::where('user_id', '=', $user->id)->where('subject_id', '=', $key)->update(['gradepoint'=>$value]);
+            }
+
             return 'true';
         }
-       return 'false';
+
+        return 'false';
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,7 +74,8 @@ class MarksDataController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -80,8 +86,9 @@ class MarksDataController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -92,7 +99,8 @@ class MarksDataController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
