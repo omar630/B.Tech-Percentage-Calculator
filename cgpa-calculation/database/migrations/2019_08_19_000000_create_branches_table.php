@@ -15,7 +15,7 @@ class CreateBranchesTable extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('branch',['CSE','ECE','IT','MECH']);
+            $table->enum('branch', ['CSE', 'ECE', 'IT', 'MECH']);
             $table->timestamps();
         });
     }
