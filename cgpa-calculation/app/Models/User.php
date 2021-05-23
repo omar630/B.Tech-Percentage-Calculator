@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasRoles;
+    use SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,9 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'branch_id', 'regulation_id',
     ];
 
     /**
@@ -28,8 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
     /**
@@ -39,5 +38,26 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'location' => 'array'
     ];
+
+    public function isAdmin()
+    {
+        return $this->hasAnyRole(['admin', ['super-admin']]);
+    }
+
+    public function setLocationAttribute($value)
+    {
+        $this->attributes['location'] = json_encode($value);
+    }
+
+    public function regulation()
+    {
+        return $this->belongsTo(Regulation::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branche::class, 'branch_id');
+    }
 }
