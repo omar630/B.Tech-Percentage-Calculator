@@ -59,7 +59,7 @@
           </li>
           @endif
           <li class="nav-item">
-            <a class="nav-link" href="profile.html">
+            <a class="nav-link" href="{{ route('user.profile') }}">
               <i class="ni ni-single-02 text-yellow"></i>
               <span class="nav-link-text">Profile</span>
             </a>

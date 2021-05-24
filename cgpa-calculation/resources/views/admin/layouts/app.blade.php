@@ -28,12 +28,12 @@
 
 <body >
   <!-- Main content -->
-  @auth  @include('admin.layouts.side-nav') @endauth
+  @if(auth()->check() && auth()->user()->isAdmin())  @include('admin.layouts.side-nav') @endif
   <div class="main-content" id="panel">
     <!-- Page content -->
-    @auth
+    @if(auth()->check() && auth()->user()->isAdmin())
     @include('admin.layouts.top-nav')
-    @endauth
+    @endif
     @include('admin.layouts.alerts')
     @yield('content')
     <!-- Page Content -->

@@ -7,11 +7,11 @@
     <div class="header-body">
       <div class="row align-items-center py-4">
         <div class="col-lg-6 col-7">
-          <h6 class="h2 text-white d-inline-block mb-0">Visitors</h6>
+          <h6 class="h2 text-white d-inline-block mb-0">Registered Users</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
               <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-              <li class="breadcrumb-item"><a href="#">Visitors</a></li>
+              <li class="breadcrumb-item"><a href="#">Registered Users</a></li>
             </ol>
           </nav>
         </div>
@@ -26,7 +26,7 @@
       <div class="card">
         <!-- Card header -->
         <div class="card-header border-0">
-          <h3 class="mb-0">Visitors</h3>
+          <h3 class="mb-0">Users</h3>
         </div>
         <!-- Light table -->
         <div class="table-responsive">
