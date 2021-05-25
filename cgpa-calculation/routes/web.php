@@ -172,33 +172,33 @@ Route::any('edit', function () {
 Route::get('admin/login', [AdminController::class, 'login'])->name('admin.login.get');
 Route::post('perform-login', [AdminController::class, 'performLogin'])->name('admin.login.post');
 Route::middleware(['role:admin|super-admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard')->middleware('permission:dashboard');
 
-    Route::get('regulation', [RegulationController::class, 'getAllRegulations'])->name('regulation.get');
+    Route::get('regulation', [RegulationController::class, 'getAllRegulations'])->name('regulation.get')->middleware('permission:regulation');
     Route::post('update-regulation', [RegulationController::class, 'updateRegulation'])->name('regulation.update.post');
     Route::delete('delete-regulation', [RegulationController::class, 'deleteRegulation'])->name('regulation.delete.post');
     Route::put('add-regulation', [RegulationController::class, 'store'])->name('regulation.add.post');
 
-    Route::get('branch', [BranchController::class, 'getAllBranch'])->name('branch.get');
+    Route::get('branch', [BranchController::class, 'getAllBranch'])->name('branch.get')->middleware('permission:branch');
     Route::post('update-branch', [BranchController::class, 'updateBranch'])->name('branch.update.post');
     Route::delete('delete-branch', [BranchController::class, 'deleteBranch'])->name('branch.delete.post');
     Route::put('add-branch', [BranchController::class, 'addBranch'])->name('branch.add.post');
 
-    Route::get('subject-type', [SubjectTypeController::class, 'index'])->name('subject-type.get');
+    Route::get('subject-type', [SubjectTypeController::class, 'index'])->name('subject-type.get')->middleware('permission:subject-type');
     Route::post('update-subject-type', [SubjectTypeController::class, 'update'])->name('subject-type.update.post');
     Route::delete('delete-subject-type', [SubjectTypeController::class, 'destroy'])->name('subject-type.delete.post');
     Route::put('add-subject-type', [SubjectTypeController::class, 'store'])->name('subject-type.add.post');
 
-    Route::get('subject', [SubjectController::class, 'index'])->name('subject.get');
+    Route::get('subject', [SubjectController::class, 'index'])->name('subject.get')->middleware('permission:subjects');
     Route::post('update-subject', [SubjectController::class, 'update'])->name('subject.update.post');
     Route::delete('delete-subject', [SubjectController::class, 'destroy'])->name('subject.delete.post');
     Route::put('add-subject', [SubjectController::class, 'store'])->name('subject.add.post');
 
-    Route::get('visited-users', [UserController::class, 'getAllVisitedUsers'])->name('visited-user.get');
+    Route::get('visited-users', [UserController::class, 'getAllVisitedUsers'])->name('visited-user.get')->middleware('permission:visitor');
 
-    Route::get('registered-users', [UserController::class, 'getAllRegisteredUsers'])->name('registered-user.get');
+    Route::get('registered-users', [UserController::class, 'getAllRegisteredUsers'])->name('registered-user.get')->middleware('permission:registered-user');
 
-    Route::get('upload-subjects', [SubjectController::class, 'uploadSubjectView'])->name('upload-subjects.get');
+    Route::get('upload-subjects', [SubjectController::class, 'uploadSubjectView'])->name('upload-subjects.get')->middleware('permission:upload-subject');
     Route::post('upload-subjects-execl', [SubjectController::class, 'uploadSubjectsExcel'])->name('upload-subjects-excel.post');
     Route::any('save-subjects', [SubjectController::class, 'saveSubjects'])->name('save-subjects.post');
 });

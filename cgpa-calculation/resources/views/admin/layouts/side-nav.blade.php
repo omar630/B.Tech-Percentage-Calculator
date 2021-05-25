@@ -12,7 +12,7 @@
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <!-- Nav items -->
         <ul class="navbar-nav">
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('dashboard'))
           <li class="nav-item">
             <a class="nav-link active" href="{{ route('admin.dashboard') }}">
               <i class="ni ni-tv-2 text-primary"></i>
@@ -20,7 +20,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('regulation'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.regulation.get') }}">
               <i class="ni ni-archive-2 text-orange"></i>
@@ -28,7 +28,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('branch'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.branch.get') }}">
               <i class="ni ni-map-big text-orange"></i>
@@ -36,7 +36,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('subject-type'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.subject-type.get') }}">
               <i class="ni ni-single-copy-04 text-primary"></i>
@@ -44,7 +44,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('subjects'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.subject.get') }}">
               <i class="ni ni-book-bookmark text-orange"></i>
@@ -52,7 +52,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('upload-subject'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.upload-subjects.get') }}">
               <i class="ni ni-chart-bar-32"></i>
@@ -60,7 +60,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('visitor'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.visited-user.get') }}">
               <i class="ni ni-chart-bar-32"></i>
@@ -68,7 +68,7 @@
             </a>
           </li>
           @endif
-          @if(auth()->user()->hasAnyRole(['super-admin']))
+          @if(auth()->user()->hasAnyRole(['super-admin']) || auth()->user()->hasPermissionTo('registered-user'))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.registered-user.get') }}">
               <i class="ni ni-chart-bar-32"></i>
