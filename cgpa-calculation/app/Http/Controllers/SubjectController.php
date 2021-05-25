@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SubjectsImport;
 use App\Models\Branche;
 use App\Models\Regulation;
 use App\Models\Subject;
 use App\Models\SubjectType;
 use App\Services\ApiResponseService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubjectController extends Controller
 {
@@ -142,5 +146,73 @@ class SubjectController extends Controller
                 'message' => 'Subject deleted'
             ]
         ]);
+    }
+
+    public function uploadSubjectView(Request $request)
+    {
+        $regulations = Regulation::all();
+        $branches = Branche::all();
+        // dd($regulations);
+        // dd($branches);
+        return view('admin.uploadSubjects')->with('branches', $branches)->with('regulations', $regulations);
+    }
+    public function uploadSubjectsExcel(Request $request)
+    {
+        $excel = new SubjectsImport;
+        // dd();
+        Excel::import($excel, $request->file('subjects'));
+        return $this->apiService->success($excel);
+    }
+
+    public function saveSubjects(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $formData = $request->toArray();
+            $year = $formData['year'];
+            $regulation_id = $formData['regulation'];
+            $branch_id = $formData['branch'];
+            unset($formData['regulation']);
+            unset($formData['branch']);
+            $insertCount = 0;
+            foreach ($formData as $key => $value) {
+                if (str_contains($key, "subject")) {
+                    $d = explode('-', $key);
+                    if ($d[1] == "sem1") {
+                        $sem = 1;
+                    } else {
+                        $sem = 2;
+                    }
+                    $insertCount++;
+                    Subject::create([
+                        'year' => $year,
+                        'sem' => $sem,
+                        "regulation_id" => $regulation_id,
+                        "branch_id" => $branch_id,
+                        "name" => $value,
+                        "credit" => $formData['credit-' . $d[2]],
+                    ]);
+                }
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->apiService->error(
+                [
+                    "notify" => [
+                        'type' => 'error',
+                        'message' => "unable to save subjects" . json_encode($e),
+                    ]
+                ]
+            );
+        }
+        return $this->apiService->success(
+            [
+                "notify" => [
+                    'type' => 'success',
+                    'message' => "Saved " . $insertCount . " subjects",
+                ]
+            ]
+        );
     }
 }

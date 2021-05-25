@@ -7,6 +7,7 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SubjectTypeController;
 use App\Http\Controllers\UserController;
+use App\Imports\SubjectsImport;
 use App\Models\Branche;
 use App\Models\Feedback;
 use App\Models\Regulation;
@@ -15,6 +16,7 @@ use App\Models\Track;
 use App\Models\User;
 use App\Models\user_data;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -195,4 +197,8 @@ Route::middleware(['role:admin|super-admin'])->prefix('admin')->name('admin.')->
     Route::get('visited-users', [UserController::class, 'getAllVisitedUsers'])->name('visited-user.get');
 
     Route::get('registered-users', [UserController::class, 'getAllRegisteredUsers'])->name('registered-user.get');
+
+    Route::get('upload-subjects', [SubjectController::class, 'uploadSubjectView'])->name('upload-subjects.get');
+    Route::post('upload-subjects-execl', [SubjectController::class, 'uploadSubjectsExcel'])->name('upload-subjects-excel.post');
+    Route::any('save-subjects', [SubjectController::class, 'saveSubjects'])->name('save-subjects.post');
 });

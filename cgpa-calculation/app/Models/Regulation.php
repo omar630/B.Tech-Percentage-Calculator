@@ -11,6 +11,11 @@ class Regulation extends Model
 
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'regulation_id');
+    }
+
+    public function subject()
+    {
+        return $this->hasMany(Subject::class);
     }
 }

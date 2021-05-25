@@ -12,36 +12,54 @@
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <!-- Nav items -->
         <ul class="navbar-nav">
+          @if(auth()->user()->hasAnyRole(['super-admin']))
           <li class="nav-item">
             <a class="nav-link active" href="{{ route('admin.dashboard') }}">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
+          @endif
+          @if(auth()->user()->hasAnyRole(['super-admin']))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.regulation.get') }}">
               <i class="ni ni-archive-2 text-orange"></i>
               <span class="nav-link-text">Regulations</span>
             </a>
           </li>
+          @endif
+          @if(auth()->user()->hasAnyRole(['super-admin']))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.branch.get') }}">
               <i class="ni ni-map-big text-orange"></i>
               <span class="nav-link-text">Branches</span>
             </a>
           </li>
+          @endif
+          @if(auth()->user()->hasAnyRole(['super-admin']))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.subject-type.get') }}">
               <i class="ni ni-single-copy-04 text-primary"></i>
               <span class="nav-link-text">Subject Types</span>
             </a>
           </li>
+          @endif
+          @if(auth()->user()->hasAnyRole(['super-admin']))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.subject.get') }}">
               <i class="ni ni-book-bookmark text-orange"></i>
               <span class="nav-link-text">Subjects</span>
             </a>
           </li>
+          @endif
+          @if(auth()->user()->hasAnyRole(['super-admin']))
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.upload-subjects.get') }}">
+              <i class="ni ni-chart-bar-32"></i>
+              <span class="nav-link-text">Upload Subjects</span>
+            </a>
+          </li>
+          @endif
           @if(auth()->user()->hasAnyRole(['super-admin']))
           <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.visited-user.get') }}">
