@@ -27,7 +27,7 @@ class SubjectController extends Controller
      */
     public function index(Request $request)
     {
-        $subjects = Subject::with('branch', 'subjectType')->latest('created_at')->get();
+        $subjects = Subject::with('branch', 'subjectType')->whereHas('branch')->latest('created_at')->get();
         $subjectTypes = SubjectType::all();
         $branches = Branche::all();
         $regulations = Regulation::all();

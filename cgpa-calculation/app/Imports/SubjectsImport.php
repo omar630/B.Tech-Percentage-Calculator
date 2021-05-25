@@ -76,13 +76,13 @@ class SubjectsImport implements ToCollection, WithLimit
                 $credit = floatval($credit);
                 if ($sem == 1) {
 
-                    if (($subject != "" || $subject != null) && $subject != "Subject") {
+                    if (($subject != "" || $subject != null) && ($subject != "Subject" && $subject != "Course Title")) {
                         array_push($sem1, ['subject' => $subject, 'credit' => $credit]);
                     }
                 }
                 if ($sem == 2) {
 
-                    if (($subject != "" || $subject != null) && $subject != "Subject") {
+                    if (($subject != "" || $subject != null) && ($subject != "Subject" && $subject != "Course Title")) {
                         array_push($sem2, ['subject' => $subject, 'credit' => $credit]);
                     }
                 }
