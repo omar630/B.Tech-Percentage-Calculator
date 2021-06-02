@@ -19,10 +19,12 @@ class UserController extends Controller
         if (Auth::check()) {
             return redirect(route('home'));
         }
+        $branch_id = Branche::first()->id;
+        $regulation_id = Regulation::first()->id;
         $all_records = [];
-        for ($i = 1; $i < 4; $i++) {
-            for ($j = 1; $j < 3; $j++) {
-                $all_records[$i . '-' . $j] = Subject::where('year', $i)->where('sem', $j)->get();
+        for ($i = 1; $i <= 1; $i++) {
+            for ($j = 1; $j <= 2; $j++) {
+                $all_records[$i . '-' . $j] = Subject::where('year', $i)->where('sem', $j)->where('branch_id', $branch_id)->where('regulation_id', $regulation_id)->get();
             }
         }
         /*foreach ($all_records as $key => $value) {
