@@ -40,7 +40,7 @@ return [
 	 ],
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'larabug'],
+            'channels' => ['daily', 'larabug'],
             'ignore_exceptions' => false,
         ],
 
@@ -51,10 +51,13 @@ return [
         ],
 
         'daily' => [
-            'driver' => 'daily',
+		'driver' => 'daily',
+		'channels' => ['single', 'larabug'],
+		'ignore_exceptions' => false,
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'days' => 14,
+	    'days' => 14,
+	    'permission' => 0777,
         ],
 
         'slack' => [
