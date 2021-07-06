@@ -7,6 +7,7 @@ use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SubjectTypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MarksDataController;
 use App\Imports\SubjectsImport;
 use App\Models\Branche;
 use App\Models\Feedback;
@@ -149,7 +150,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::post('savemarks', 'MarksDataController@store')->name('savemarks');
+Route::post('savemarks', [MarksDataController::class ,'store'])->name('savemarks');
 
 Route::any('getregisteredusers', function () {
     $user = User::all();
