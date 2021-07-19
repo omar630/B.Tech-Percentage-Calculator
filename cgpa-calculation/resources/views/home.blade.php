@@ -279,7 +279,7 @@
       </div>
 
 
-      <p class="d-flex justify-content-center">{{url('/')}}&copy; 2021</p>
+      <p class="d-flex justify-content-center">{{env('APP_DOMAIN') ?? ''}}&copy; 2021</p>
     </div>
 
   </footer>
