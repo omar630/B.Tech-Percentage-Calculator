@@ -279,7 +279,7 @@
       </div>
 
 
-      <p class="d-flex justify-content-center">omarsblog.gq&copy; 2020</p>
+      <p class="d-flex justify-content-center">{{url('/')}}&copy; 2021</p>
     </div>
 
   </footer>
